@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STEM ARENA - Ultimate Competition Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen">
+    <!-- Cyber Navigation -->
+    <nav class="bg-black bg-opacity-80 backdrop-blur-md border-b border-cyan-500 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center space-x-3">
+                    <div class="text-4xl neon-text">⚡</div>
+                    <span class="text-2xl font-black neon-text">STEM ARENA</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <button onclick="showSection('dashboard')" class="nav-btn text-lg font-semibold hover:text-cyan-400 transition-all duration-300 hover:scale-110">COMMAND CENTER</button>
+                    <button onclick="showSection('compete')" class="nav-btn text-lg font-semibold hover:text-pink-400 transition-all duration-300 hover:scale-110">BATTLE ZONE</button>
+                    <button onclick="window.open('ai-chat.html', '_blank')" class="nav-btn text-lg font-semibold hover:text-pink-400 transition-all duration-300 hover:scale-110">AI TUTOR</button>
+                    <button onclick="window.open('competition-1v1.html', '_blank')" class="nav-btn text-lg font-semibold hover:text-pink-400 transition-all duration-300 hover:scale-110">1VS1 COMPETITION</button>
+                    <button onclick="window.open('challenge-generator.html', '_blank')" class="nav-btn text-lg font-semibold hover:text-pink-400 transition-all duration-300 hover:scale-110">CHALLENGE GENERATOR</button>
+                    <button onclick="showSection('profile')" class="nav-btn text-lg font-semibold hover:text-yellow-400 transition-all duration-300 hover:scale-110">PROFILE</button>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- Gems Display -->
+                    <div class="flex items-center space-x-2 bg-gradient-to-r from-purple-900 to-pink-900 px-4 py-2 rounded-full neon-border">
+                        <div class="text-2xl gem-sparkle">💎</div>
+                        <span class="font-bold text-lg" id="gem-count">1,247</span>
+                    </div>
+                    <!-- Level Badge -->
+                    <div class="bg-gradient-to-r from-orange-500 to-red-600 text-white px-4 py-2 rounded-full text-sm font-bold neon-border">
+                        LEVEL 3 - WARRIOR
+                    </div>
+                    <!-- Profile Icon -->
+                    <div class="w-12 h-12 bg-gradient-to-br from-cyan-400 to-purple-600 rounded-full flex items-center justify-center text-2xl font-bold neon-border cursor-pointer" onclick="showSection('profile')">
+                        🚀
+                    </div>
+                    <!-- Logout Button -->
+                    <button onclick="logout()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-bold text-sm transition-all neon-border">
+                        LOGOUT
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Section -->
+    <div id="login" class="section max-w-md mx-auto px-4 py-16">
+        <div class="cyber-card rounded-xl p-8">
+            <div class="text-center mb-8">
+                <div class="text-6xl mb-4">⚡</div>
+                <h1 class="text-4xl font-black neon-text mb-2">ENTER THE ARENA</h1>
+                <p class="text-cyan-300">Access your warrior profile</p>
+            </div>
+            
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <div class="mb-6">
+                    <label class="block text-cyan-400 text-sm font-semibold mb-2">USERNAME</label>
+                    <input type="text" id="login-username" required class="w-full p-4 bg-black border-2 border-cyan-500 rounded-lg text-white text-lg focus:border-pink-500 focus:outline-none neon-border" placeholder="Enter your warrior codename">
+                </div>
+                
+                <div class="mb-8">
+                    <label class="block text-cyan-400 text-sm font-semibold mb-2">PASSWORD</label>
+                    <input type="password" id="login-password" required class="w-full p-4 bg-black border-2 border-cyan-500 rounded-lg text-white text-lg focus:border-pink-500 focus:outline-none neon-border" placeholder="Enter your secret code">
+                </div>
+                
+                <button type="submit" class="w-full bg-gradient-to-r from-red-600 to-pink-600 text-white py-4 rounded-lg font-black text-xl hover:from-red-700 hover:to-pink-700 transition-all transform hover:scale-105 neon-border mb-6">
+                    ENTER BATTLE
+                </button>
+            </form>
+            
+            <div class="text-center">
+                <p class="text-gray-400 mb-4">New warrior?</p>
+                <button onclick="showSection('signup')" class="text-cyan-400 hover:text-cyan-300 font-semibold underline">
+                    CREATE WARRIOR PROFILE
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Section -->
+    <div id="signup" class="section hidden max-w-2xl mx-auto px-4 py-16">
+        <div class="cyber-card rounded-xl p-8">
+            <div class="text-center mb-8">
+                <div class="text-6xl mb-4">🚀</div>
+                <h1 class="text-4xl font-black neon-text mb-2">JOIN THE ARENA</h1>
+                <p class="text-cyan-300">Create your warrior profile</p>
+            </div>
+            
+            <form id="signup-form" onsubmit="handleSignup(event)">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-cyan-400 text-sm font-semibold mb-2">FIRST NAME</label>
+                        <input type="text" id="signup-firstname" required class="w-full p-4 bg-black border-2 border-cyan-500 rounded-lg text-white text-lg focus:border-pink-500 focus:outline-none neon-border" placeholder="Your first name">
+                    </div>
+                    <div>
+                        <label class="block text-cyan-400 text-sm font-semibold mb-2">LAST NAME</label>
+                        <input type="text" id="signup-lastname" required class="w-full p-4 bg-black border-2 border-cyan-500 rounded-lg text-white text-lg focus:border-pink-500 focus:outline-none neon-border" placeholder="Your last name">
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-cyan-400 text-sm font-semibold mb-2">USERNAME</label>
+                    <input type="text" id="signup-username" required class="w-full p-4 bg-black border-2 border-cyan-500 rounded-lg text-white text-lg focus:border-pink-500 focus:outline-none neon-border" placeholder="Choose your warrior codename">
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-cyan-400 text-sm font-semibold mb-2">EMAIL</label>
+                    <input type="email" id="signup-email" required class="w-full p-4 bg-black border-2 border-cyan-500 rounded-lg text-white text-lg focus:border-pink-500 focus:outline-none neon-border" placeholder="your.email@gmail.com">
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-cyan-400 text-sm font-semibold mb-2">LOCATION</label>
+                        <input type="text" id="signup-location" required class="w-full p-4 bg-black border-2 border-cyan-500 rounded-lg text-white text-lg focus:border-pink-500 focus:outline-none neon-border" placeholder="City, Country">
+                    </div>
+                    <div>
+                        <label class="block text-cyan-400 text-sm font-semibold mb-2">GRADE</label>
+                        <select id="signup-grade" required class="w-full p-4 bg-black border-2 border-cyan-500 rounded-lg text-white text-lg focus:border-pink-500 focus:outline-none neon-border">
+                            <option value="">Select Grade</option>
+                            <option value="9">9th Grade</option>
+                            <option value="10">10th Grade</option>
+                            <option value="11">11th Grade</option>
+                            <option value="12">12th Grade</option>
+                            <option value="college">College</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-cyan-400 text-sm font-semibold mb-2">BIRTHDAY</label>
+                    <input type="date" id="signup-birthday" required class="w-full p-4 bg-black border-2 border-cyan-500 rounded-lg text-white text-lg focus:border-pink-500 focus:outline-none neon-border">
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-cyan-400 text-sm font-semibold mb-2">PASSWORD</label>
+                    <input type="password" id="signup-password" required class="w-full p-4 bg-black border-2 border-cyan-500 rounded-lg text-white text-lg focus:border-pink-500 focus:outline-none neon-border" placeholder="Create a strong password">
+                </div>
+                
+                <div class="mb-8">
+                    <label class="block text-cyan-400 text-sm font-semibold mb-2">CONFIRM PASSWORD</label>
+                    <input type="password" id="signup-confirm-password" required class="w-full p-4 bg-black border-2 border-cyan-500 rounded-lg text-white text-lg focus:border-pink-500 focus:outline-none neon-border" placeholder="Confirm your password">
+                </div>
+                
+                <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-4 rounded-lg font-black text-xl hover:from-purple-700 hover:to-blue-700 transition-all transform hover:scale-105 neon-border mb-6">
+                    CREATE WARRIOR
+                </button>
+            </form>
+            
+            <div class="text-center">
+                <p class="text-gray-400 mb-4">Already a warrior?</p>
+                <button onclick="showSection('login')" class="text-cyan-400 hover:text-cyan-300 font-semibold underline">
+                    ENTER EXISTING PROFILE
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Section -->
+    <div id="dashboard" class="section hidden max-w-7xl mx-auto px-4 py-8">
+        <div class="mb-8 text-center">
+            <h1 class="text-5xl font-black neon-text mb-4">COMMAND CENTER</h1>
+            <p class="text-xl text-cyan-300">Ready to dominate the STEM battlefield, WARRIOR? 🔥</p>
+        </div>
+
+        <!-- User Profile Dashboard -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+            <!-- Main Profile Card -->
+            <div class="lg:col-span-2 cyber-card rounded-xl p-8">
+                <div class="flex items-center space-x-6 mb-8">
+                    <div class="w-24 h-24 bg-gradient-to-br from-cyan-400 to-purple-600 rounded-full flex items-center justify-center text-4xl neon-border">
+                        🚀
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-black neon-text mb-2">ALEX_THUNDER</h2>
+                        <p class="text-xl text-cyan-300 font-semibold">Alexander Rodriguez</p>
+                        <div class="flex items-center space-x-4 mt-3">
+                            <span class="bg-gradient-to-r from-orange-500 to-red-600 text-white px-3 py-1 rounded-full text-sm font-bold">LEVEL 3 - WARRIOR</span>
+                            <span class="text-cyan-400">🌍 New York, USA</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Details Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="text-center p-4 bg-gradient-to-br from-blue-900 to-blue-800 rounded-lg border border-blue-400">
+                        <div class="text-2xl mb-2">🎓</div>
+                        <p class="text-blue-300 text-sm font-semibold">GRADE</p>
+                        <p class="text-xl font-bold text-white">11th</p>
+                    </div>
+                    <div class="text-center p-4 bg-gradient-to-br from-green-900 to-green-800 rounded-lg border border-green-400">
+                        <div class="text-2xl mb-2">🏆</div>
+                        <p class="text-green-300 text-sm font-semibold">COMPETITIONS WON</p>
+                        <p class="text-xl font-bold text-white">47</p>
+                    </div>
+                    <div class="text-center p-4 bg-gradient-to-br from-purple-900 to-purple-800 rounded-lg border border-purple-400">
+                        <div class="text-2xl mb-2">⚡</div>
+                        <p class="text-purple-300 text-sm font-semibold">POWER LEVEL</p>
+                        <p class="text-xl font-bold text-white">3/10</p>
+                    </div>
+                    <div class="text-center p-4 bg-gradient-to-br from-pink-900 to-pink-800 rounded-lg border border-pink-400">
+                        <div class="text-2xl mb-2">🎂</div>
+                        <p class="text-pink-300 text-sm font-semibold">BIRTHDAY</p>
+                        <p class="text-sm font-bold text-white">March 15, 2007</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level Progress Card -->
+            <div class="cyber-card rounded-xl p-8">
+                <h3 class="text-xl font-bold mb-6 neon-text text-center">POWER LEVEL PROGRESSION</h3>
+                
+                <!-- Level Visual -->
+                <div class="relative mb-6">
+                    <div class="w-32 h-32 mx-auto relative">
+                        <svg class="w-32 h-32 transform -rotate-90" viewBox="0 0 36 36">
+                            <path class="text-gray-700" stroke="currentColor" stroke-width="3" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                            <path class="text-cyan-400" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="30, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center">
+                                <div class="text-2xl font-black text-cyan-400">3</div>
+                                <div class="text-xs text-gray-400">of 10</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Level Details -->
+                <div class="space-y-3">
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-400">Current Rank:</span>
+                        <span class="text-cyan-400 font-semibold">#4 of 156</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-400">Next Level:</span>
+                        <span class="text-purple-400 font-semibold">Champion (Lv.4)</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-400">Progress:</span>
+                        <span class="text-green-400 font-semibold">30%</span>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="w-full bg-gray-800 rounded-full h-3 mt-4 border border-cyan-500">
+                    <div class="energy-bar h-3 rounded-full" style="width: 30%"></div>
+                </div>
+                
+                <p class="text-xs text-center text-cyan-300 mt-4">3 more victories to advance!</p>
+            </div>
+        </div>
+
+        <!-- Power Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="cyber-card rounded-xl p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-cyan-400 text-sm font-semibold">VICTORIES</p>
+                        <p class="text-4xl font-black text-green-400">47</p>
+                    </div>
+                    <div class="text-5xl">🏆</div>
+                </div>
+                <div class="mt-3 text-xs text-green-300">+3 this week</div>
+            </div>
+            <div class="cyber-card rounded-xl p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-cyan-400 text-sm font-semibold">DOMINATION RATE</p>
+                        <p class="text-4xl font-black text-purple-400">73%</p>
+                    </div>
+                    <div class="text-5xl">⚡</div>
+                </div>
+                <div class="mt-3 text-xs text-purple-300">Unstoppable!</div>
+            </div>
+            <div class="cyber-card rounded-xl p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-cyan-400 text-sm font-semibold">ARENA RANK</p>
+                        <p class="text-4xl font-black text-orange-400">#4</p>
+                    </div>
+                    <div class="text-5xl">🎯</div>
+                </div>
+                <div class="mt-3 text-xs text-orange-300">Elite tier</div>
+            </div>
+            <div class="cyber-card rounded-xl p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-cyan-400 text-sm font-semibold">KILL STREAK</p>
+                        <p class="text-4xl font-black text-red-400">8</p>
+                    </div>
+                    <div class="text-5xl">🔥</div>
+                </div>
+                <div class="mt-3 text-xs text-red-300">ON FIRE!</div>
+            </div>
+        </div>
+
+        <!-- Power Level Progress -->
+        <div class="cyber-card rounded-xl p-8 mb-8 pulse-glow">
+            <h2 class="text-2xl font-bold mb-4 neon-text">POWER LEVEL PROGRESSION</h2>
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-lg text-cyan-300">Rank #4 of 156 WARRIORS</span>
+                <span class="text-lg text-pink-400 font-bold">3 ELIMINATIONS TO ASCEND!</span>
+            </div>
+            <div class="w-full bg-gray-800 rounded-full h-6 mb-4 border border-cyan-500">
+                <div class="energy-bar h-6 rounded-full" style="width: 65%"></div>
+            </div>
+            <p class="text-cyan-300">Crush 3 more opponents to unlock LEVEL 4 - CHAMPION status!</p>
+        </div>
+
+        <!-- Battle History -->
+        <div class="cyber-card rounded-xl p-8">
+            <h2 class="text-2xl font-bold mb-6 neon-text">RECENT BATTLES</h2>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between p-6 bg-gradient-to-r from-green-900 to-green-800 rounded-lg border border-green-400">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-4 h-4 bg-green-400 rounded-full animate-pulse"></div>
+                        <div>
+                            <p class="font-bold text-xl">PHYSICS ANNIHILATION vs Sarah</p>
+                            <p class="text-green-300">2 hours ago • +50 gems earned</p>
+                        </div>
+                    </div>
+                    <div class="text-green-400 font-black text-2xl">VICTORY</div>
+                </div>
+                <div class="flex items-center justify-between p-6 bg-gradient-to-r from-green-900 to-green-800 rounded-lg border border-green-400">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-4 h-4 bg-green-400 rounded-full animate-pulse"></div>
+                        <div>
+                            <p class="font-bold text-xl">MATH MASSACRE vs Mike</p>
+                            <p class="text-green-300">5 hours ago • +45 gems earned</p>
+                        </div>
+                    </div>
+                    <div class="text-green-400 font-black text-2xl">VICTORY</div>
+                </div>
+                <div class="flex items-center justify-between p-6 bg-gradient-to-r from-red-900 to-red-800 rounded-lg border border-red-400">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-4 h-4 bg-red-400 rounded-full animate-pulse"></div>
+                        <div>
+                            <p class="font-bold text-xl">CHEMISTRY CLASH vs Emma</p>
+                            <p class="text-red-300">1 day ago • -20 gems lost</p>
+                        </div>
+                    </div>
+                    <div class="text-red-400 font-black text-2xl">DEFEAT</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Battle Zone Section -->
+    <div id="compete" class="section hidden max-w-7xl mx-auto px-4 py-8">
+        <h1 class="text-5xl font-black neon-text mb-8 text-center">BATTLE ZONE ⚔️</h1>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <!-- Quick Battle -->
+            <div class="cyber-card rounded-xl p-8 text-center battle-ready">
+                <div class="text-6xl mb-6">⚡</div>
+                <h2 class="text-3xl font-black mb-4 text-white">INSTANT 1V1 COMBAT</h2>
+                <p class="text-xl text-white mb-6">Find a worthy opponent NOW!</p>
+                <button onclick="findMatch()" class="w-full bg-gradient-to-r from-red-600 to-pink-600 text-white py-6 rounded-lg font-black text-xl hover:from-red-700 hover:to-pink-700 transition-all transform hover:scale-105 neon-border">
+                    ENGAGE ENEMY
+                </button>
+            </div>
+
+            <!-- Challenge Mode -->
+            <div class="cyber-card rounded-xl p-8 text-center">
+                <div class="text-6xl mb-6">🎯</div>
+                <h2 class="text-3xl font-black mb-4 neon-text">DIRECT CHALLENGE</h2>
+                <p class="text-xl text-cyan-300 mb-6">Call out a specific warrior</p>
+                <input type="text" id="challenge-username" placeholder="Enter warrior codename" class="w-full p-4 bg-black border-2 border-cyan-500 rounded-lg mb-6 text-white text-lg focus:border-pink-500 focus:outline-none">
+                <button onclick="challengeSpecificPlayer()" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-6 rounded-lg font-black text-xl hover:from-purple-700 hover:to-blue-700 transition-all transform hover:scale-105 neon-border">
+                    ISSUE CHALLENGE
+                </button>
+            </div>
+        </div>
+
+        <!-- Subject Selection for Battle -->
+        <div class="cyber-card rounded-xl p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 neon-text text-center">CHOOSE YOUR BATTLEFIELD</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                <div class="battle-subject p-6 bg-gradient-to-br from-blue-800 to-blue-900 rounded-lg border-2 border-transparent hover:border-blue-400 transition-all cursor-pointer transform hover:scale-105" onclick="selectBattleSubject('math')">
+                    <div class="text-4xl mb-4 text-center">🔢</div>
+                    <h3 class="text-xl font-bold text-center">MATHEMATICS</h3>
+                    <p class="text-blue-300 text-center text-sm">Equations, Calculus, Algebra</p>
+                </div>
+                <div class="battle-subject p-6 bg-gradient-to-br from-purple-800 to-purple-900 rounded-lg border-2 border-transparent hover:border-purple-400 transition-all cursor-pointer transform hover:scale-105" onclick="selectBattleSubject('physics')">
+                    <div class="text-4xl mb-4 text-center">⚛️</div>
+                    <h3 class="text-xl font-bold text-center">PHYSICS</h3>
+                    <p class="text-purple-300 text-center text-sm">Forces, Energy, Motion</p>
+                </div>
+                <div class="battle-subject p-6 bg-gradient-to-br from-green-800 to-green-900 rounded-lg border-2 border-transparent hover:border-green-400 transition-all cursor-pointer transform hover:scale-105" onclick="selectBattleSubject('chemistry')">
+                    <div class="text-4xl mb-4 text-center">🧪</div>
+                    <h3 class="text-xl font-bold text-center">CHEMISTRY</h3>
+                    <p class="text-green-300 text-center text-sm">Reactions, Equations</p>
+                </div>
+                <div class="battle-subject p-6 bg-gradient-to-br from-teal-800 to-teal-900 rounded-lg border-2 border-transparent hover:border-teal-400 transition-all cursor-pointer transform hover:scale-105" onclick="selectBattleSubject('biology')">
+                    <div class="text-4xl mb-4 text-center">🧬</div>
+                    <h3 class="text-xl font-bold text-center">BIOLOGY</h3>
+                    <p class="text-teal-300 text-center text-sm">Cells, Systems, Processes</p>
+                </div>
+                <div class="battle-subject p-6 bg-gradient-to-br from-indigo-800 to-indigo-900 rounded-lg border-2 border-transparent hover:border-indigo-400 transition-all cursor-pointer transform hover:scale-105" onclick="selectBattleSubject('cs')">
+                    <div class="text-4xl mb-4 text-center">💻</div>
+                    <h3 class="text-xl font-bold text-center">COMPUTER SCIENCE</h3>
+                    <p class="text-indigo-300 text-center text-sm">Programming, Algorithms</p>
+                </div>
+                <div class="battle-subject p-6 bg-gradient-to-br from-orange-800 to-orange-900 rounded-lg border-2 border-transparent hover:border-orange-400 transition-all cursor-pointer transform hover:scale-105" onclick="selectBattleSubject('engineering')">
+                    <div class="text-4xl mb-4 text-center">⚙️</div>
+                    <h3 class="text-xl font-bold text-center">ENGINEERING</h3>
+                    <p class="text-orange-300 text-center text-sm">Design, Systems</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Active Warriors -->
+        <div class="cyber-card rounded-xl p-8">
+            <h2 class="text-2xl font-bold mb-6 neon-text">WARRIORS ONLINE (LEVEL 3)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-6 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg border-2 border-transparent hover:border-cyan-400 transition-all cursor-pointer transform hover:scale-105" onclick="challengePlayer('Sarah')">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-pink-500 to-red-500 rounded-full flex items-center justify-center text-2xl font-bold">🔥</div>
+                        <div>
+                            <p class="font-bold text-xl">SARAH</p>
+                            <p class="text-cyan-400">Domination: 68%</p>
+                            <p class="text-green-400">💎 892 gems</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg border-2 border-transparent hover:border-cyan-400 transition-all cursor-pointer transform hover:scale-105" onclick="challengePlayer('Mike')">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-2xl font-bold">⚡</div>
+                        <div>
+                            <p class="font-bold text-xl">MIKE</p>
+                            <p class="text-cyan-400">Domination: 71%</p>
+                            <p class="text-green-400">💎 1,156 gems</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg border-2 border-transparent hover:border-cyan-400 transition-all cursor-pointer transform hover:scale-105" onclick="challengePlayer('Emma')">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-teal-500 rounded-full flex items-center justify-center text-2xl font-bold">🚀</div>
+                        <div>
+                            <p class="font-bold text-xl">EMMA</p>
+                            <p class="text-cyan-400">Domination: 75%</p>
+                            <p class="text-green-400">💎 1,334 gems</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Battle Status -->
+        <div id="battle-status" class="cyber-card rounded-xl p-8 hidden">
+            <h2 class="text-2xl font-bold mb-6 neon-text text-center">BATTLE IN PROGRESS ⚔️</h2>
+            <div class="text-center">
+                <div class="text-6xl mb-4">⚡</div>
+                <h3 class="text-xl font-bold mb-4" id="battle-opponent">VS. OPPONENT</h3>
+                <p class="text-cyan-300 mb-6" id="battle-subject">Subject: Mathematics</p>
+                <div class="w-full bg-gray-800 rounded-full h-4 mb-4 border border-cyan-500">
+                    <div id="battle-timer" class="energy-bar h-4 rounded-full transition-all" style="width: 100%"></div>
+                </div>
+                <p class="text-sm text-cyan-400" id="battle-time-left">Time remaining: 5:00</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Section -->
+    <div id="profile" class="section hidden max-w-4xl mx-auto px-4 py-8">
+        <h1 class="text-5xl font-black neon-text mb-8 text-center">WARRIOR PROFILE 👤</h1>
+        
+        <div class="cyber-card rounded-xl p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 neon-text">CHOOSE YOUR BATTLE ICON</h2>
+            <div class="grid grid-cols-4 md:grid-cols-8 gap-4 mb-8">
+                <div class="icon-selector w-16 h-16 bg-gradient-to-br from-red-500 to-pink-500 rounded-full flex items-center justify-center text-2xl cursor-pointer" onclick="selectIcon(this, '🚀')">🚀</div>
+                <div class="icon-selector w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center text-2xl cursor-pointer" onclick="selectIcon(this, '⚡')">⚡</div>
+                <div class="icon-selector w-16 h-16 bg-gradient-to-br from-green-500 to-teal-500 rounded-full flex items-center justify-center text-2xl cursor-pointer" onclick="selectIcon(this, '🔥')">🔥</div>
+                <div class="icon-selector w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-2xl cursor-pointer" onclick="selectIcon(this, '💀')">💀</div>
+                <div class="icon-selector w-16 h-16 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-full flex items-center justify-center text-2xl cursor-pointer" onclick="selectIcon(this, '🎯')">🎯</div>
+                <div class="icon-selector w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-2xl cursor-pointer" onclick="selectIcon(this, '🌟')">🌟</div>
+                <div class="icon-selector w-16 h-16 bg-gradient-to-br from-pink-500 to-red-500 rounded-full flex items-center justify-center text-2xl cursor-pointer" onclick="selectIcon(this, '👑')">👑</div>
+                <div class="icon-selector w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-full flex items-center justify-center text-2xl cursor-pointer" onclick="selectIcon(this, '🛡️')">🛡️</div>
+                <div class="icon-selector w-16 h-16 bg-gradient-to-br from-green-500 to-yellow-500 rounded-full flex items-center justify-center text-2xl cursor-pointer" onclick="selectIcon(this, '🐉')">🐉</div>
+                <div class="icon-selector w-16 h-16 bg-gradient-to-br from-red-500 to-orange-500 rounded-full flex items-center justify-center text-2xl cursor-pointer" onclick="selectIcon(this, '🦅')">🦅</div>
+                <div class="icon-selector w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-2xl cursor-pointer" onclick="selectIcon(this, '🌀')">🌀</div>
+                <div class="icon-selector w-16 h-16 bg-gradient-to-br from-teal-500 to-green-500 rounded-full flex items-center justify-center text-2xl cursor-pointer" onclick="selectIcon(this, '⚔️')">⚔️</div>
+                <div class="icon-selector w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center text-2xl cursor-pointer" onclick="selectIcon(this, '🎮')">🎮</div>
+                <div class="icon-selector w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-500 rounded-full flex items-center justify-center text-2xl cursor-pointer" onclick="selectIcon(this, '🚁')">🚁</div>
+                <div class="icon-selector w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center text-2xl cursor-pointer" onclick="selectIcon(this, '🎪')">🎪</div>
+                <div class="icon-selector w-16 h-16 bg-gradient-to-br from-yellow-500 to-red-500 rounded-full flex items-center justify-center text-2xl cursor-pointer" onclick="selectIcon(this, '🎨')">🎨</div>
+            </div>
+            
+            <div class="text-center">
+                <h3 class="text-xl font-bold mb-4 text-cyan-300">CURRENT SELECTION</h3>
+                <div id="selected-icon" class="w-24 h-24 bg-gradient-to-br from-cyan-400 to-purple-600 rounded-full flex items-center justify-center text-4xl mx-auto neon-border">
+                    🚀
+                </div>
+            </div>
+        </div>
+
+        <!-- Gem Store -->
+        <div class="cyber-card rounded-xl p-8">
+            <h2 class="text-2xl font-bold mb-6 neon-text">GEM STORE 💎</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-gradient-to-br from-purple-800 to-pink-800 p-6 rounded-lg border border-purple-400">
+                    <div class="text-center">
+                        <div class="text-4xl mb-4">🎨</div>
+                        <h3 class="text-xl font-bold mb-2">CUSTOM COLORS</h3>
+                        <p class="text-purple-300 mb-4">Unlock unique color schemes</p>
+                        <div class="text-2xl font-bold text-yellow-400 mb-4">500 💎</div>
+                        <button class="w-full bg-purple-600 text-white py-3 rounded-lg font-bold hover:bg-purple-700 transition-all">
+                            PURCHASE
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-blue-800 to-cyan-800 p-6 rounded-lg border border-blue-400">
+                    <div class="text-center">
+                        <div class="text-4xl mb-4">⚡</div>
+                        <h3 class="text-xl font-bold mb-2">POWER BOOST</h3>
+                        <p class="text-blue-300 mb-4">2x XP for next 5 battles</p>
+                        <div class="text-2xl font-bold text-yellow-400 mb-4">300 💎</div>
+                        <button class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition-all">
+                            PURCHASE
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-green-800 to-teal-800 p-6 rounded-lg border border-green-400">
+                    <div class="text-center">
+                        <div class="text-4xl mb-4">🛡️</div>
+                        <h3 class="text-xl font-bold mb-2">SHIELD</h3>
+                        <p class="text-green-300 mb-4">Protect rank from next loss</p>
+                        <div class="text-2xl font-bold text-yellow-400 mb-4">750 💎</div>
+                        <button class="w-full bg-green-600 text-white py-3 rounded-lg font-bold hover:bg-green-700 transition-all">
+                            PURCHASE
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentGems = 1247;
+        let selectedProfileIcon = '🚀';
+        let selectedBattleSubject = 'math';
+        let currentBattle = null;
+        let battleTimer = null;
+
+        function showSection(sectionName) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            document.getElementById(sectionName).classList.remove('hidden');
+            
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-cyan-400', 'text-pink-400', 'text-purple-400', 'text-green-400', 'text-yellow-400');
+            });
+        }
+
+        function selectBattleSubject(subject) {
+            selectedBattleSubject = subject;
+            
+            // Update visual selection
+            document.querySelectorAll('.battle-subject').forEach(subjectDiv => {
+                subjectDiv.classList.remove('border-cyan-400');
+                subjectDiv.classList.add('border-transparent');
+            });
+            
+            event.currentTarget.classList.remove('border-transparent');
+            event.currentTarget.classList.add('border-cyan-400');
+        }
+
+        async function findMatch() {
+            const btn = event.target;
+            btn.innerHTML = '🔍 SCANNING FOR ENEMIES...';
+            btn.disabled = true;
+            
+            try {
+                const response = await fetch('http://127.0.0.1:8000/competition/join', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: localStorage.getItem('stemArena_currentUser') || 'ALEX_THUNDER',
+                        subject: selectedBattleSubject,
+                        difficulty: 'medium'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.status === 'matched') {
+                    // Start battle immediately
+                    startBattle(data);
+                } else if (data.status === 'waiting') {
+                    // Wait for opponent
+                    btn.innerHTML = '⏳ WAITING FOR OPPONENT...';
+                    checkForMatch(data.waiting_id);
+                }
+            } catch (error) {
+                console.error('Error finding match:', error);
+                btn.innerHTML = '❌ CONNECTION ERROR';
+                setTimeout(() => {
+                    btn.innerHTML = 'ENGAGE ENEMY';
+                    btn.disabled = false;
+                }, 2000);
+            }
+        }
+
+        async function checkForMatch(waitingId) {
+            // Poll for match status
+            const checkInterval = setInterval(async () => {
+                try {
+                    const response = await fetch(`http://127.0.0.1:8000/competition/status/${waitingId}`);
+                    const data = await response.json();
+                    
+                    if (data.status === 'matched') {
+                        clearInterval(checkInterval);
+                        startBattle(data);
+                    }
+                } catch (error) {
+                    console.error('Error checking match status:', error);
+                }
+            }, 2000);
+        }
+
+        function startBattle(battleData) {
+            currentBattle = battleData;
+            
+            // Show battle status
+            document.getElementById('battle-status').classList.remove('hidden');
+            document.getElementById('battle-opponent').textContent = `VS. ${battleData.opponent}`;
+            document.getElementById('battle-subject').textContent = `Subject: ${battleData.subject.toUpperCase()}`;
+            
+            // Start timer
+            let timeLeft = 300; // 5 minutes
+            battleTimer = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('battle-time-left').textContent = `Time remaining: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+                document.getElementById('battle-timer').style.width = `${(timeLeft / 300) * 100}%`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(battleTimer);
+                    endBattle('timeout');
+                }
+            }, 1000);
+            
+            // Show battle question
+            showBattleQuestion(battleData.task);
+        }
+
+        function showBattleQuestion(task) {
+            // Create battle question interface
+            const battleStatus = document.getElementById('battle-status');
+            battleStatus.innerHTML = `
+                <h2 class="text-2xl font-bold mb-6 neon-text text-center">BATTLE QUESTION ⚔️</h2>
+                <div class="text-center mb-6">
+                    <h3 class="text-xl font-bold mb-4 text-pink-400">${task.question}</h3>
+                    <p class="text-cyan-300 mb-6">Subject: ${task.subject.toUpperCase()}</p>
+                </div>
+                <div class="mb-6">
+                    <textarea id="battle-answer" placeholder="Enter your answer here..." 
+                              class="w-full p-4 bg-black border-2 border-cyan-500 rounded-lg text-white text-lg focus:border-pink-500 focus:outline-none neon-border" 
+                              rows="4"></textarea>
+                </div>
+                <div class="text-center">
+                    <button onclick="submitBattleAnswer()" class="bg-gradient-to-r from-red-600 to-pink-600 text-white px-8 py-4 rounded-lg font-bold text-lg hover:from-red-700 hover:to-pink-700 transition-all neon-border">
+                        SUBMIT ANSWER
+                    </button>
+                </div>
+            `;
+        }
+
+        async function submitBattleAnswer() {
+            const answer = document.getElementById('battle-answer').value;
+            if (!answer.trim()) {
+                alert('❌ Please enter your answer!');
+                return;
+            }
+            
+            try {
+                const response = await fetch('http://127.0.0.1:8000/competition/submit-answer', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        competition_id: currentBattle.competition_id,
+                        username: localStorage.getItem('stemArena_currentUser') || 'ALEX_THUNDER',
+                        answer: answer
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.status === 'completed') {
+                    showBattleResults(data);
+                } else {
+                    // Wait for opponent
+                    document.getElementById('battle-status').innerHTML = `
+                        <h2 class="text-2xl font-bold mb-6 neon-text text-center">WAITING FOR OPPONENT ⏳</h2>
+                        <div class="text-center">
+                            <div class="text-6xl mb-4">⚡</div>
+                            <p class="text-cyan-300">Your answer has been submitted. Waiting for opponent...</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error submitting answer:', error);
+                alert('❌ Error submitting answer. Please try again.');
+            }
+        }
+
+        function showBattleResults(results) {
+            clearInterval(battleTimer);
+            
+            const currentUser = localStorage.getItem('stemArena_currentUser') || 'ALEX_THUNDER';
+            const userResult = results.results[currentUser];
+            const isWinner = results.winner === currentUser;
+            
+            document.getElementById('battle-status').innerHTML = `
+                <h2 class="text-2xl font-bold mb-6 neon-text text-center">BATTLE RESULTS ⚔️</h2>
+                <div class="text-center">
+                    <div class="text-6xl mb-4">${isWinner ? '🏆' : '💀'}</div>
+                    <h3 class="text-2xl font-bold mb-4 ${isWinner ? 'text-green-400' : 'text-red-400'}">
+                        ${isWinner ? 'VICTORY!' : 'DEFEAT!'}
+                    </h3>
+                    <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-6 rounded-lg mb-6 neon-border">
+                        <h4 class="text-lg font-bold mb-2">AI ASSESSMENT</h4>
+                        <p class="text-lg">Score: ${userResult.score}/100</p>
+                        <p class="text-sm">${userResult.feedback}</p>
+                    </div>
+                    <p class="text-cyan-300 mb-6">${isWinner ? '💎 +50 gems earned!' : '💎 -20 gems lost!'}</p>
+                    <button onclick="endBattle()" class="bg-green-600 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-green-700 transition-all neon-border">
+                        RETURN TO BATTLE ZONE
+                    </button>
+                </div>
+            `;
+            
+            // Update gems
+            if (isWinner) {
+                currentGems += 50;
+            } else {
+                currentGems = Math.max(0, currentGems - 20);
+            }
+            document.getElementById('gem-count').textContent = currentGems.toLocaleString();
+        }
+
+        function endBattle(reason = 'completed') {
+            clearInterval(battleTimer);
+            currentBattle = null;
+            document.getElementById('battle-status').classList.add('hidden');
+            
+            if (reason === 'timeout') {
+                alert('⏰ TIME\'S UP! Battle ended due to timeout.');
+            }
+        }
+
+        function challengeSpecificPlayer() {
+            const username = document.getElementById('challenge-username').value.trim();
+            if (!username) {
+                alert('❌ Please enter a warrior codename!');
+                return;
+            }
+            
+            if (confirm(`⚔️ CHALLENGE ${username.toUpperCase()} TO 1V1 COMBAT IN ${selectedBattleSubject.toUpperCase()}?`)) {
+                alert(`🎯 CHALLENGE ISSUED TO ${username.toUpperCase()}! They have 5 minutes to accept or face dishonor!`);
+            }
+        }
+
+        function challengePlayer(playerName) {
+            if(confirm(`⚔️ CHALLENGE ${playerName.toUpperCase()} TO 1V1 COMBAT IN ${selectedBattleSubject.toUpperCase()}?`)) {
+                alert(`🎯 CHALLENGE ISSUED TO ${playerName.toUpperCase()}! They have 5 minutes to accept or face dishonor!`);
+            }
+        }
+
+        function selectIcon(element, icon) {
+            document.querySelectorAll('.icon-selector').forEach(selector => {
+                selector.classList.remove('icon-selected');
+            });
+            
+            element.classList.add('icon-selected');
+            selectedProfileIcon = icon;
+            document.getElementById('selected-icon').textContent = icon;
+        }
+
+        // User authentication functions
+        async function handleLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            
+            try {
+                const formData = new FormData();
+                formData.append('username', username);
+                formData.append('password', password);
+                
+                const response = await fetch("http://127.0.0.1:8000/login", {
+                    method: "POST",
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // Store the token
+                    localStorage.setItem('stemArena_token', data.access_token);
+                    localStorage.setItem('stemArena_currentUser', data.user.username);
+                    
+                    // Fetch user data
+                    await loadUserDataFromAPI(data.user.username);
+                    showSection('dashboard');
+                } else {
+                    alert('❌ ' + data.detail);
+                }
+            } catch (error) {
+                alert('⚠️ Error connecting to server. Make sure the backend is running on http://127.0.0.1:8000');
+                console.error(error);
+            }
+        }
+
+        
+        async function handleSignup(event) {
+            event.preventDefault();
+            
+            const firstName = document.getElementById('signup-firstname').value;
+            const lastName = document.getElementById('signup-lastname').value;
+            const username = document.getElementById('signup-username').value;
+            const email = document.getElementById('signup-email').value;
+            const location = document.getElementById('signup-location').value;
+            const grade = document.getElementById('signup-grade').value;
+            const birthday = document.getElementById('signup-birthday').value;
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('signup-confirm-password').value;
+            
+            // Validation
+            if (password !== confirmPassword) {
+                alert('❌ PASSWORDS DO NOT MATCH! TRY AGAIN!');
+                return;
+            }
+            
+            // Create user data
+            const userData = {
+                firstName,
+                lastName,
+                username,
+                email,
+                location,
+                grade,
+                birthday,
+                password
+            };
+            
+            try {
+                const response = await fetch("http://127.0.0.1:8000/signup", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(userData)
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    alert("🎉 WARRIOR PROFILE CREATED! You can now log in.");
+                    document.getElementById("signup-form").reset();
+                    showSection('login');
+                } else {
+                    alert("❌ Signup failed: " + data.detail);
+                }
+            } catch (error) {
+                console.error("Error during signup:", error);
+                alert("⚠️ Error connecting to server. Make sure the backend is running on http://127.0.0.1:8000");
+            }
+        }
+        
+        async function loadUserDataFromAPI(username) {
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/user/${username}`);
+                if (response.ok) {
+                    const userData = await response.json();
+                    loadUserData(userData);
+                } else {
+                    console.error('Failed to load user data');
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+            }
+        }
+        
+        function loadUserData(userData) {
+            // Update dashboard with user data
+            const profileIconElement = document.querySelector('.w-24.h-24 .text-4xl');
+            if (profileIconElement) {
+                profileIconElement.textContent = userData.profileIcon || '🚀';
+            }
+            
+            const usernameElement = document.querySelector('.text-3xl.font-black.neon-text');
+            if (usernameElement) {
+                usernameElement.textContent = userData.username.toUpperCase();
+            }
+            
+            const nameElement = document.querySelector('.text-xl.text-cyan-300.font-semibold');
+            if (nameElement) {
+                nameElement.textContent = userData.firstName + ' ' + userData.lastName;
+            }
+            
+            // Update location - find the specific location element in the profile section
+            const locationElements = document.querySelectorAll('.text-cyan-400');
+            locationElements.forEach(element => {
+                if (element.textContent.includes('🌍') || element.textContent.includes('New York')) {
+                    element.textContent = '🌍 ' + userData.location;
+                }
+            });
+            
+            // Update profile details
+            const gradeElement = document.querySelector('.text-blue-300');
+            if (gradeElement) {
+                const gradeText = gradeElement.nextElementSibling;
+                if (gradeText) {
+                    gradeText.textContent = userData.grade + (userData.grade === 'college' ? '' : 'th');
+                }
+            }
+            
+            const victoriesElement = document.querySelector('.text-green-300');
+            if (victoriesElement) {
+                const victoriesText = victoriesElement.nextElementSibling;
+                if (victoriesText) {
+                    victoriesText.textContent = userData.victories;
+                }
+            }
+            
+            const levelElement = document.querySelector('.text-purple-300');
+            if (levelElement) {
+                const levelText = levelElement.nextElementSibling;
+                if (levelText) {
+                    levelText.textContent = userData.level + '/10';
+                }
+            }
+            
+            const birthdayElement = document.querySelector('.text-pink-300');
+            if (birthdayElement) {
+                const birthdayText = birthdayElement.nextElementSibling;
+                if (birthdayText) {
+                    const birthDate = new Date(userData.birthday);
+                    const options = { month: 'long', day: 'numeric', year: 'numeric' };
+                    birthdayText.textContent = birthDate.toLocaleDateString('en-US', options);
+                }
+            }
+            
+            // Update gems
+            currentGems = userData.gems;
+            document.getElementById('gem-count').textContent = currentGems.toLocaleString();
+            
+            // Update level badge
+            const levelBadge = document.querySelector('.bg-gradient-to-r.from-orange-500.to-red-600');
+            if (levelBadge) {
+                const levelNames = ['ROOKIE', 'CADET', 'WARRIOR', 'CHAMPION', 'ELITE', 'MASTER', 'LEGEND', 'TITAN', 'OVERLORD', 'GOD'];
+                levelBadge.textContent = `LEVEL ${userData.level} - ${levelNames[userData.level - 1] || 'UNKNOWN'}`;
+            }
+        }
+        
+        function logout() {
+            localStorage.removeItem('stemArena_currentUser');
+            localStorage.removeItem('stemArena_token');
+            showSection('login');
+            alert('👋 LOGGED OUT! SEE YOU IN THE ARENA, WARRIOR!');
+        }
+        
+        async function checkAuthStatus() {
+            const currentUser = localStorage.getItem('stemArena_currentUser');
+            const token = localStorage.getItem('stemArena_token');
+            
+            if (currentUser && token) {
+                try {
+                    await loadUserDataFromAPI(currentUser);
+                    showSection('dashboard');
+                } catch (error) {
+                    console.error('Auth check failed:', error);
+                    localStorage.removeItem('stemArena_currentUser');
+                    localStorage.removeItem('stemArena_token');
+                    showSection('login');
+                }
+            } else {
+                showSection('login');
+            }
+        }
+
+        // Initialize authentication check
+        checkAuthStatus();
+        
+        // Add some dynamic effects
+        setInterval(() => {
+            const gemCount = document.getElementById('gem-count');
+            if (Math.random() < 0.1) { // 10% chance every second
+                gemCount.classList.add('gem-sparkle');
+                setTimeout(() => {
+                    gemCount.classList.remove('gem-sparkle');
+                }, 1500);
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

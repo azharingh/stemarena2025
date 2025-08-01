@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenge Generator - STEM ARENA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .neon-text { text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff; }
+        .cyber-card { background: linear-gradient(135deg, rgba(0,0,0,0.9), rgba(20,20,20,0.9)); border: 2px solid #00ffff; box-shadow: 0 0 20px rgba(0,255,255,0.3); }
+        .neon-border { border: 2px solid #00ffff; box-shadow: 0 0 10px rgba(0,255,255,0.5); }
+        .subject-card { cursor: pointer; transition: all 0.3s ease; }
+        .subject-card:hover { transform: scale(1.05); }
+        .subject-card.selected { border-color: #00ffff; background-color: rgba(0,255,255,0.1); }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-black bg-opacity-80 backdrop-blur-md border-b border-cyan-500 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="text-3xl neon-text">🎯</div>
+                    <span class="text-xl font-black neon-text">CHALLENGE GENERATOR</span>
+                </div>
+                <a href="pj.html" class="bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-lg font-bold text-sm transition-all neon-border">
+                    BACK TO ARENA
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-6xl mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-5xl font-black neon-text mb-4">CHALLENGE GENERATOR 🎯</h1>
+            <p class="text-xl text-cyan-300">Generate AI-powered challenges for all STEM subjects!</p>
+        </div>
+
+        <!-- Subject Selection -->
+        <div class="cyber-card rounded-xl p-8 mb-8">
+            <h2 class="text-3xl font-bold neon-text mb-6">Choose Your Subject</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
+                <div class="subject-card bg-gray-800 rounded-lg p-6 text-center" data-subject="math">
+                    <div class="text-4xl mb-4">📐</div>
+                    <h3 class="text-xl font-bold mb-2">Mathematics</h3>
+                    <p class="text-cyan-300 text-sm">Equations, calculus, algebra</p>
+                </div>
+                
+                <div class="subject-card bg-gray-800 rounded-lg p-6 text-center" data-subject="physics">
+                    <div class="text-4xl mb-4">⚛️</div>
+                    <h3 class="text-xl font-bold mb-2">Physics</h3>
+                    <p class="text-cyan-300 text-sm">Forces, energy, motion</p>
+                </div>
+                
+                <div class="subject-card bg-gray-800 rounded-lg p-6 text-center" data-subject="chemistry">
+                    <div class="text-4xl mb-4">🧪</div>
+                    <h3 class="text-xl font-bold mb-2">Chemistry</h3>
+                    <p class="text-cyan-300 text-sm">Reactions, equations, calculations</p>
+                </div>
+                
+                <div class="subject-card bg-gray-800 rounded-lg p-6 text-center" data-subject="biology">
+                    <div class="text-4xl mb-4">🧬</div>
+                    <h3 class="text-xl font-bold mb-2">Biology</h3>
+                    <p class="text-cyan-300 text-sm">Cells, systems, processes</p>
+                </div>
+                
+                <div class="subject-card bg-gray-800 rounded-lg p-6 text-center" data-subject="cs">
+                    <div class="text-4xl mb-4">💻</div>
+                    <h3 class="text-xl font-bold mb-2">Computer Science</h3>
+                    <p class="text-cyan-300 text-sm">Programming, algorithms</p>
+                </div>
+                
+                <div class="subject-card bg-gray-800 rounded-lg p-6 text-center" data-subject="engineering">
+                    <div class="text-4xl mb-4">⚙️</div>
+                    <h3 class="text-xl font-bold mb-2">Engineering</h3>
+                    <p class="text-cyan-300 text-sm">Design, systems, technical</p>
+                </div>
+            </div>
+
+            <!-- Difficulty Selection -->
+            <div class="flex justify-center space-x-4 mb-6">
+                <button class="difficulty-btn bg-green-600 hover:bg-green-700 px-6 py-3 rounded-lg font-bold transition-all" data-difficulty="easy">
+                    EASY
+                </button>
+                <button class="difficulty-btn bg-yellow-600 hover:bg-yellow-700 px-6 py-3 rounded-lg font-bold transition-all" data-difficulty="medium">
+                    MEDIUM
+                </button>
+                <button class="difficulty-btn bg-red-600 hover:bg-red-700 px-6 py-3 rounded-lg font-bold transition-all" data-difficulty="hard">
+                    HARD
+                </button>
+            </div>
+
+            <!-- Generate Button -->
+            <div class="text-center">
+                <button id="generate-btn" class="bg-gradient-to-r from-cyan-600 to-purple-600 text-white px-12 py-4 rounded-lg font-bold text-xl hover:from-cyan-700 hover:to-purple-700 transition-all transform hover:scale-105 neon-border">
+                    GENERATE CHALLENGE
+                </button>
+            </div>
+        </div>
+
+        <!-- Challenge Display -->
+        <div id="challenge-section" class="cyber-card rounded-xl p-8 mb-8 hidden">
+            <div class="text-center mb-6">
+                <h2 class="text-3xl font-bold neon-text mb-4">YOUR CHALLENGE</h2>
+                <div class="flex justify-center space-x-4 mb-4">
+                    <span id="challenge-subject" class="bg-cyan-600 px-4 py-2 rounded-lg font-bold"></span>
+                    <span id="challenge-difficulty" class="bg-yellow-600 px-4 py-2 rounded-lg font-bold"></span>
+                </div>
+            </div>
+
+            <!-- Task Display -->
+            <div class="bg-gray-800 rounded-lg p-6 mb-6">
+                <h3 class="text-2xl font-bold mb-4 neon-text">TASK:</h3>
+                <p id="challenge-question" class="text-xl text-white mb-4"></p>
+                <div id="challenge-hints" class="text-cyan-300"></div>
+            </div>
+
+            <!-- Answer Section -->
+            <div class="mb-6">
+                <label class="block text-lg font-bold mb-2 neon-text">YOUR ANSWER:</label>
+                <textarea id="challenge-answer" rows="6" class="w-full p-4 bg-black border-2 border-cyan-500 rounded-lg text-white text-lg focus:border-pink-500 focus:outline-none neon-border" placeholder="Write your detailed answer here..."></textarea>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex justify-center space-x-4">
+                <button id="submit-challenge" class="bg-gradient-to-r from-green-600 to-blue-600 text-white px-8 py-4 rounded-lg font-bold text-xl hover:from-green-700 hover:to-blue-700 transition-all transform hover:scale-105 neon-border">
+                    SUBMIT ANSWER
+                </button>
+                <button id="new-challenge" class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-lg font-bold text-xl hover:from-purple-700 hover:to-pink-700 transition-all transform hover:scale-105 neon-border">
+                    NEW CHALLENGE
+                </button>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results-section" class="cyber-card rounded-xl p-8 mb-8 hidden">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold neon-text mb-6">CHALLENGE RESULTS</h2>
+                <div id="score-display" class="text-4xl font-bold mb-4"></div>
+                <div id="feedback-display" class="text-xl text-cyan-300 mb-6"></div>
+                <div id="ai-assessment" class="text-lg text-gray-300 mb-6"></div>
+                <button id="try-again" class="bg-gradient-to-r from-cyan-600 to-purple-600 text-white px-8 py-4 rounded-lg font-bold text-xl hover:from-cyan-700 hover:to-purple-700 transition-all transform hover:scale-105 neon-border">
+                    TRY ANOTHER CHALLENGE
+                </button>
+            </div>
+        </div>
+
+        <!-- Quick Challenge Buttons -->
+        <div class="cyber-card rounded-xl p-8">
+            <h2 class="text-2xl font-bold neon-text mb-6">Quick Challenges</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <button onclick="quickChallenge('math', 'easy')" class="bg-green-600 hover:bg-green-700 p-4 rounded-lg font-bold transition-all">
+                    📐 Easy Math
+                </button>
+                <button onclick="quickChallenge('physics', 'medium')" class="bg-yellow-600 hover:bg-yellow-700 p-4 rounded-lg font-bold transition-all">
+                    ⚛️ Medium Physics
+                </button>
+                <button onclick="quickChallenge('chemistry', 'hard')" class="bg-red-600 hover:bg-red-700 p-4 rounded-lg font-bold transition-all">
+                    🧪 Hard Chemistry
+                </button>
+                <button onclick="quickChallenge('biology', 'medium')" class="bg-blue-600 hover:bg-blue-700 p-4 rounded-lg font-bold transition-all">
+                    🧬 Medium Biology
+                </button>
+                <button onclick="quickChallenge('cs', 'easy')" class="bg-purple-600 hover:bg-purple-700 p-4 rounded-lg font-bold transition-all">
+                    💻 Easy CS
+                </button>
+                <button onclick="quickChallenge('engineering', 'hard')" class="bg-pink-600 hover:bg-pink-700 p-4 rounded-lg font-bold transition-all">
+                    ⚙️ Hard Engineering
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedSubject = 'math';
+        let selectedDifficulty = 'medium';
+        let currentChallenge = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default selections
+            document.querySelector('[data-subject="math"]').classList.add('selected');
+            document.querySelector('[data-difficulty="medium"]').classList.add('ring-4', 'ring-cyan-400');
+        });
+
+        // Subject selection
+        document.querySelectorAll('.subject-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.subject-card').forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedSubject = this.dataset.subject;
+            });
+        });
+
+        // Difficulty selection
+        document.querySelectorAll('.difficulty-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('ring-4', 'ring-cyan-400'));
+                this.classList.add('ring-4', 'ring-cyan-400');
+                selectedDifficulty = this.dataset.difficulty;
+            });
+        });
+
+        // Generate challenge
+        document.getElementById('generate-btn').addEventListener('click', function() {
+            generateChallenge();
+        });
+
+        // Submit answer
+        document.getElementById('submit-challenge').addEventListener('click', function() {
+            submitChallengeAnswer();
+        });
+
+        // New challenge
+        document.getElementById('new-challenge').addEventListener('click', function() {
+            generateChallenge();
+        });
+
+        // Try again
+        document.getElementById('try-again').addEventListener('click', function() {
+            resetChallenge();
+        });
+
+        async function generateChallenge() {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/ai/generate-task', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        subject: selectedSubject,
+                        difficulty: selectedDifficulty
+                    })
+                });
+
+                const data = await response.json();
+                currentChallenge = data;
+                displayChallenge(data);
+            } catch (error) {
+                console.error('Error generating challenge:', error);
+                alert('Error generating challenge. Please try again.');
+            }
+        }
+
+        function displayChallenge(data) {
+            // Hide results section
+            document.getElementById('results-section').classList.add('hidden');
+            
+            // Show challenge section
+            document.getElementById('challenge-section').classList.remove('hidden');
+            
+            // Set challenge details
+            document.getElementById('challenge-subject').textContent = getSubjectName(data.subject);
+            document.getElementById('challenge-difficulty').textContent = data.difficulty.toUpperCase();
+            document.getElementById('challenge-question').textContent = data.question;
+            
+            // Set up hints
+            const hintsDiv = document.getElementById('challenge-hints');
+            hintsDiv.innerHTML = '';
+            if (data.hints) {
+                hintsDiv.innerHTML = '<h4 class="font-bold mb-2">Hints:</h4><ul class="list-disc list-inside">';
+                data.hints.forEach(hint => {
+                    hintsDiv.innerHTML += `<li>${hint}</li>`;
+                });
+                hintsDiv.innerHTML += '</ul>';
+            }
+            
+            // Clear previous answer
+            document.getElementById('challenge-answer').value = '';
+        }
+
+        async function submitChallengeAnswer() {
+            const answer = document.getElementById('challenge-answer').value.trim();
+            if (!answer) {
+                alert('Please enter your answer!');
+                return;
+            }
+            
+            try {
+                const response = await fetch('http://127.0.0.1:8000/competition/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        user_id: 'challenge_user',
+                        answer: answer,
+                        question: currentChallenge.question
+                    })
+                });
+
+                const data = await response.json();
+                showChallengeResults(data);
+            } catch (error) {
+                console.error('Error submitting answer:', error);
+                alert('Error submitting answer. Please try again.');
+            }
+        }
+
+        function showChallengeResults(data) {
+            // Hide challenge section
+            document.getElementById('challenge-section').classList.add('hidden');
+            
+            // Show results section
+            document.getElementById('results-section').classList.remove('hidden');
+            
+            // Display results
+            const scoreDisplay = document.getElementById('score-display');
+            const feedbackDisplay = document.getElementById('feedback-display');
+            const aiAssessment = document.getElementById('ai-assessment');
+            
+            // Set score color based on performance
+            let scoreColor = 'text-red-400';
+            if (data.score >= 80) scoreColor = 'text-green-400';
+            else if (data.score >= 60) scoreColor = 'text-yellow-400';
+            
+            scoreDisplay.innerHTML = `Score: <span class="${scoreColor}">${data.score}%</span>`;
+            feedbackDisplay.textContent = data.feedback;
+            aiAssessment.innerHTML = `<strong>AI Assessment:</strong> ${data.ai_assessment ? 'AI-powered evaluation' : 'Rule-based evaluation'}`;
+        }
+
+        function resetChallenge() {
+            document.getElementById('results-section').classList.add('hidden');
+            document.getElementById('challenge-section').classList.add('hidden');
+            document.getElementById('challenge-answer').value = '';
+            currentChallenge = null;
+        }
+
+        function quickChallenge(subject, difficulty) {
+            selectedSubject = subject;
+            selectedDifficulty = difficulty;
+            
+            // Update UI selections
+            document.querySelectorAll('.subject-card').forEach(c => c.classList.remove('selected'));
+            document.querySelector(`[data-subject="${subject}"]`).classList.add('selected');
+            
+            document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('ring-4', 'ring-cyan-400'));
+            document.querySelector(`[data-difficulty="${difficulty}"]`).classList.add('ring-4', 'ring-cyan-400');
+            
+            generateChallenge();
+        }
+
+        function getSubjectName(subject) {
+            const subjects = {
+                'math': 'Mathematics',
+                'physics': 'Physics',
+                'chemistry': 'Chemistry',
+                'biology': 'Biology',
+                'cs': 'Computer Science',
+                'engineering': 'Engineering'
+            };
+            return subjects[subject] || subject;
+        }
+    </script>
+</body>
+</html> 

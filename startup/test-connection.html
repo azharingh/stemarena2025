@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backend Connection Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center">
+    <div class="max-w-md mx-auto p-8 bg-gray-800 rounded-lg border border-cyan-500">
+        <h1 class="text-2xl font-bold mb-6 text-center text-cyan-400">Backend Connection Test</h1>
+        
+        <div id="status" class="mb-4 p-4 rounded-lg">
+            <p class="text-center">Testing connection...</p>
+        </div>
+        
+        <div id="results" class="space-y-4">
+            <!-- Results will be displayed here -->
+        </div>
+        
+        <button onclick="testConnection()" class="w-full bg-cyan-600 hover:bg-cyan-700 text-white py-3 rounded-lg font-bold">
+            Test Connection Again
+        </button>
+    </div>
+
+    <script>
+        async function testConnection() {
+            const statusDiv = document.getElementById('status');
+            const resultsDiv = document.getElementById('results');
+            
+            statusDiv.innerHTML = '<p class="text-center text-yellow-400">Testing connection...</p>';
+            resultsDiv.innerHTML = '';
+            
+            try {
+                // Test 1: Basic connectivity
+                const response = await fetch('http://127.0.0.1:8000/');
+                if (response.ok) {
+                    addResult('✅ Backend server is running', 'success');
+                } else {
+                    addResult('❌ Backend server responded with error', 'error');
+                }
+            } catch (error) {
+                addResult('❌ Cannot connect to backend server', 'error');
+                addResult('Make sure the backend is running on http://127.0.0.1:8000', 'info');
+            }
+            
+            // Test 2: Competition endpoint
+            try {
+                const taskResponse = await fetch('http://127.0.0.1:8000/competition/task');
+                if (taskResponse.ok) {
+                    const taskData = await taskResponse.json();
+                    addResult('✅ Competition API is working', 'success');
+                    addResult(`Sample task: ${taskData.question}`, 'info');
+                } else {
+                    addResult('❌ Competition API error', 'error');
+                }
+            } catch (error) {
+                addResult('❌ Competition API not accessible', 'error');
+            }
+            
+            statusDiv.innerHTML = '<p class="text-center text-green-400">Test completed!</p>';
+        }
+        
+        function addResult(message, type) {
+            const resultsDiv = document.getElementById('results');
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `p-3 rounded-lg ${
+                type === 'success' ? 'bg-green-900 text-green-300' :
+                type === 'error' ? 'bg-red-900 text-red-300' :
+                'bg-blue-900 text-blue-300'
+            }`;
+            resultDiv.textContent = message;
+            resultsDiv.appendChild(resultDiv);
+        }
+        
+        // Run test on page load
+        testConnection();
+    </script>
+</body>
+</html> 

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Math Competition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white flex flex-col items-center justify-center h-screen">
+    <h1 class="text-3xl font-bold mb-6">🔢 Math Competition</h1>
+    <div id="task" class="text-2xl mb-4">Loading...</div>
+    <input id="answer" type="text" placeholder="Your Answer" class="p-2 text-black rounded mb-2" />
+    <button onclick="submitAnswer()" class="bg-blue-600 hover:bg-blue-700 p-2 rounded">Submit</button>
+    <p id="result" class="mt-4"></p>
+
+    <script>
+        const userId = localStorage.getItem('stemArena_currentUser'); // update if needed
+
+        async function fetchTask() {
+            const res = await fetch("http://127.0.0.1:8000/competition/task?subject=math&difficulty=medium");
+            const task = await res.json();
+            document.getElementById("task").textContent = task.question;
+            
+            // Store task data for assessment
+            window.currentTask = task;
+        }
+
+        async function submitAnswer() {
+            const answer = document.getElementById("answer").value;
+            const res = await fetch("http://127.0.0.1:8000/competition/submit", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                    user_id: userId, 
+                    answer: answer,
+                    question: window.currentTask ? window.currentTask.question : ""
+                })
+            });
+            const result = await res.json();
+            
+            if (result.status === "assessed") {
+                const score = result.score;
+                const feedback = result.feedback;
+                const gems = result.gems_earned;
+                
+                let resultText = `🎯 Score: ${score}% | 💎 Gems: +${gems}`;
+                if (result.correct) {
+                    resultText += " | ✅ Great job!";
+                } else {
+                    resultText += " | 📝 " + feedback;
+                }
+                
+                document.getElementById("result").textContent = resultText;
+            } else {
+                document.getElementById("result").textContent = "❌ Error in assessment";
+            }
+        }
+
+        fetchTask();
+    </script>
+</body>
+</html>

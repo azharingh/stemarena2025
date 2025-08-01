@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1vs1 Competition - STEM ARENA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .neon-text { text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff; }
+        .cyber-card { background: linear-gradient(135deg, rgba(0,0,0,0.9), rgba(20,20,20,0.9)); border: 2px solid #00ffff; box-shadow: 0 0 20px rgba(0,255,255,0.3); }
+        .neon-border { border: 2px solid #00ffff; box-shadow: 0 0 10px rgba(0,255,255,0.5); }
+        .pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .countdown { font-size: 3rem; font-weight: bold; color: #ff4444; text-shadow: 0 0 10px #ff4444; }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-black bg-opacity-80 backdrop-blur-md border-b border-cyan-500 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="text-3xl neon-text">⚔️</div>
+                    <span class="text-xl font-black neon-text">1vs1 COMPETITION</span>
+                </div>
+                <a href="pj.html" class="bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-lg font-bold text-sm transition-all neon-border">
+                    BACK TO ARENA
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-6xl mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-5xl font-black neon-text mb-4">1vs1 COMPETITION ⚔️</h1>
+            <p class="text-xl text-cyan-300">Find your opponent and compete in real-time!</p>
+        </div>
+
+        <!-- Matchmaking Section -->
+        <div id="matchmaking-section" class="cyber-card rounded-xl p-8 mb-8">
+            <h2 class="text-3xl font-bold neon-text mb-6">Find Your Opponent</h2>
+            
+            <!-- Subject Selection -->
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+                <div class="subject-card" data-subject="math">
+                    <div class="text-4xl mb-2">📐</div>
+                    <h3 class="text-lg font-bold">Mathematics</h3>
+                </div>
+                <div class="subject-card" data-subject="physics">
+                    <div class="text-4xl mb-2">⚛️</div>
+                    <h3 class="text-lg font-bold">Physics</h3>
+                </div>
+                <div class="subject-card" data-subject="chemistry">
+                    <div class="text-4xl mb-2">🧪</div>
+                    <h3 class="text-lg font-bold">Chemistry</h3>
+                </div>
+                <div class="subject-card" data-subject="biology">
+                    <div class="text-4xl mb-2">🧬</div>
+                    <h3 class="text-lg font-bold">Biology</h3>
+                </div>
+                <div class="subject-card" data-subject="cs">
+                    <div class="text-4xl mb-2">💻</div>
+                    <h3 class="text-lg font-bold">Computer Science</h3>
+                </div>
+                <div class="subject-card" data-subject="engineering">
+                    <div class="text-4xl mb-2">⚙️</div>
+                    <h3 class="text-lg font-bold">Engineering</h3>
+                </div>
+            </div>
+
+            <!-- Difficulty Selection -->
+            <div class="flex justify-center space-x-4 mb-6">
+                <button class="difficulty-btn bg-green-600 hover:bg-green-700 px-6 py-3 rounded-lg font-bold transition-all" data-difficulty="easy">
+                    EASY
+                </button>
+                <button class="difficulty-btn bg-yellow-600 hover:bg-yellow-700 px-6 py-3 rounded-lg font-bold transition-all" data-difficulty="medium">
+                    MEDIUM
+                </button>
+                <button class="difficulty-btn bg-red-600 hover:bg-red-700 px-6 py-3 rounded-lg font-bold transition-all" data-difficulty="hard">
+                    HARD
+                </button>
+            </div>
+
+            <!-- Join Button -->
+            <div class="text-center">
+                <button id="join-btn" class="bg-gradient-to-r from-cyan-600 to-purple-600 text-white px-12 py-4 rounded-lg font-bold text-xl hover:from-cyan-700 hover:to-purple-700 transition-all transform hover:scale-105 neon-border">
+                    FIND OPPONENT
+                </button>
+            </div>
+        </div>
+
+        <!-- Waiting Section -->
+        <div id="waiting-section" class="cyber-card rounded-xl p-8 mb-8 hidden">
+            <div class="text-center">
+                <div class="text-6xl mb-4 pulse">⏳</div>
+                <h2 class="text-3xl font-bold neon-text mb-4">Searching for Opponent...</h2>
+                <p class="text-xl text-cyan-300 mb-4">Subject: <span id="waiting-subject">Mathematics</span></p>
+                <p class="text-xl text-cyan-300 mb-6">Difficulty: <span id="waiting-difficulty">Medium</span></p>
+                <div class="flex justify-center space-x-2">
+                    <div class="w-3 h-3 bg-cyan-400 rounded-full animate-bounce"></div>
+                    <div class="w-3 h-3 bg-cyan-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+                    <div class="w-3 h-3 bg-cyan-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                </div>
+                <button id="cancel-search" class="mt-6 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-bold transition-all">
+                    CANCEL SEARCH
+                </button>
+            </div>
+        </div>
+
+        <!-- Competition Section -->
+        <div id="competition-section" class="cyber-card rounded-xl p-8 mb-8 hidden">
+            <div class="text-center mb-6">
+                <h2 class="text-3xl font-bold neon-text mb-4">COMPETITION IN PROGRESS</h2>
+                <div class="countdown mb-4" id="timer">05:00</div>
+                <p class="text-xl text-cyan-300">vs <span id="opponent-name">Opponent</span></p>
+            </div>
+
+            <!-- Task Display -->
+            <div class="bg-gray-800 rounded-lg p-6 mb-6">
+                <h3 class="text-2xl font-bold mb-4 neon-text">TASK:</h3>
+                <p id="task-question" class="text-xl text-white mb-4"></p>
+                <div id="task-hints" class="text-cyan-300"></div>
+            </div>
+
+            <!-- Answer Submission -->
+            <div class="mb-6">
+                <label class="block text-lg font-bold mb-2 neon-text">YOUR ANSWER:</label>
+                <textarea id="answer-input" rows="4" class="w-full p-4 bg-black border-2 border-cyan-500 rounded-lg text-white text-lg focus:border-pink-500 focus:outline-none neon-border" placeholder="Write your answer here..."></textarea>
+            </div>
+
+            <div class="text-center">
+                <button id="submit-answer" class="bg-gradient-to-r from-green-600 to-blue-600 text-white px-8 py-4 rounded-lg font-bold text-xl hover:from-green-700 hover:to-blue-700 transition-all transform hover:scale-105 neon-border">
+                    SUBMIT ANSWER
+                </button>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results-section" class="cyber-card rounded-xl p-8 mb-8 hidden">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold neon-text mb-6">COMPETITION RESULTS</h2>
+                <div id="winner-display" class="text-2xl mb-6"></div>
+                <div id="results-details" class="text-lg text-cyan-300"></div>
+                <button id="play-again" class="mt-6 bg-gradient-to-r from-cyan-600 to-purple-600 text-white px-8 py-4 rounded-lg font-bold text-xl hover:from-cyan-700 hover:to-purple-700 transition-all transform hover:scale-105 neon-border">
+                    PLAY AGAIN
+                </button>
+            </div>
+        </div>
+
+        <!-- Waiting Players List -->
+        <div class="cyber-card rounded-xl p-8">
+            <h2 class="text-2xl font-bold neon-text mb-4">Waiting Players</h2>
+            <div id="waiting-players-list" class="space-y-2">
+                <!-- Players will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = localStorage.getItem('stemArena_currentUser');
+        let selectedSubject = 'math';
+        let selectedDifficulty = 'medium';
+        let currentCompetition = null;
+        let timerInterval = null;
+        let waitingInterval = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!currentUser) {
+                alert('Please log in first!');
+                window.location.href = 'pj.html';
+                return;
+            }
+            
+            loadWaitingPlayers();
+            setInterval(loadWaitingPlayers, 5000); // Update every 5 seconds
+        });
+
+        // Subject selection
+        document.querySelectorAll('.subject-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.subject-card').forEach(c => c.classList.remove('border-cyan-500', 'bg-cyan-900'));
+                this.classList.add('border-cyan-500', 'bg-cyan-900');
+                selectedSubject = this.dataset.subject;
+            });
+        });
+
+        // Difficulty selection
+        document.querySelectorAll('.difficulty-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('ring-4', 'ring-cyan-400'));
+                this.classList.add('ring-4', 'ring-cyan-400');
+                selectedDifficulty = this.dataset.difficulty;
+            });
+        });
+
+        // Join competition
+        document.getElementById('join-btn').addEventListener('click', function() {
+            joinCompetition();
+        });
+
+        // Cancel search
+        document.getElementById('cancel-search').addEventListener('click', function() {
+            cancelSearch();
+        });
+
+        // Submit answer
+        document.getElementById('submit-answer').addEventListener('click', function() {
+            submitAnswer();
+        });
+
+        // Play again
+        document.getElementById('play-again').addEventListener('click', function() {
+            resetCompetition();
+        });
+
+        async function joinCompetition() {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/competition/join', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: currentUser,
+                        subject: selectedSubject,
+                        difficulty: selectedDifficulty
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.status === 'matched') {
+                    // Start competition
+                    startCompetition(data);
+                } else if (data.status === 'waiting') {
+                    // Show waiting screen
+                    showWaitingScreen(data);
+                }
+            } catch (error) {
+                console.error('Error joining competition:', error);
+                alert('Error joining competition. Please try again.');
+            }
+        }
+
+        function startCompetition(data) {
+            currentCompetition = data.competition_id;
+            
+            // Hide other sections
+            document.getElementById('matchmaking-section').classList.add('hidden');
+            document.getElementById('waiting-section').classList.add('hidden');
+            document.getElementById('results-section').classList.add('hidden');
+            
+            // Show competition section
+            document.getElementById('competition-section').classList.remove('hidden');
+            
+            // Set up competition data
+            document.getElementById('opponent-name').textContent = data.opponent;
+            document.getElementById('task-question').textContent = data.task.question;
+            
+            // Set up hints
+            const hintsDiv = document.getElementById('task-hints');
+            hintsDiv.innerHTML = '';
+            if (data.task.hints) {
+                hintsDiv.innerHTML = '<h4 class="font-bold mb-2">Hints:</h4><ul class="list-disc list-inside">';
+                data.task.hints.forEach(hint => {
+                    hintsDiv.innerHTML += `<li>${hint}</li>`;
+                });
+                hintsDiv.innerHTML += '</ul>';
+            }
+            
+            // Start timer
+            startTimer(300); // 5 minutes
+        }
+
+        function showWaitingScreen(data) {
+            document.getElementById('matchmaking-section').classList.add('hidden');
+            document.getElementById('competition-section').classList.add('hidden');
+            document.getElementById('results-section').classList.add('hidden');
+            document.getElementById('waiting-section').classList.remove('hidden');
+            
+            document.getElementById('waiting-subject').textContent = getSubjectName(selectedSubject);
+            document.getElementById('waiting-difficulty').textContent = selectedDifficulty.toUpperCase();
+            
+            // Start polling for match
+            waitingInterval = setInterval(checkForMatch, 2000);
+        }
+
+        function cancelSearch() {
+            if (waitingInterval) {
+                clearInterval(waitingInterval);
+                waitingInterval = null;
+            }
+            
+            document.getElementById('waiting-section').classList.add('hidden');
+            document.getElementById('matchmaking-section').classList.remove('hidden');
+        }
+
+        async function checkForMatch() {
+            if (!currentCompetition) return;
+            
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/competition/status/${currentCompetition}`);
+                const data = await response.json();
+                
+                if (data.status === 'active') {
+                    // Competition is active, start it
+                    startCompetition({
+                        competition_id: currentCompetition,
+                        opponent: 'Opponent',
+                        task: data.task
+                    });
+                }
+            } catch (error) {
+                console.error('Error checking match:', error);
+            }
+        }
+
+        function startTimer(duration) {
+            let timeLeft = duration;
+            
+            function updateTimer() {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('timer').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timeUp();
+                }
+                timeLeft--;
+            }
+            
+            updateTimer();
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function timeUp() {
+            alert('Time is up!');
+            submitAnswer();
+        }
+
+        async function submitAnswer() {
+            const answer = document.getElementById('answer-input').value.trim();
+            if (!answer) {
+                alert('Please enter your answer!');
+                return;
+            }
+            
+            try {
+                const response = await fetch('http://127.0.0.1:8000/competition/submit-answer', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        competition_id: currentCompetition,
+                        username: currentUser,
+                        answer: answer
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.status === 'completed') {
+                    showResults(data);
+                } else {
+                    alert('Answer submitted! Waiting for opponent...');
+                    document.getElementById('submit-answer').disabled = true;
+                    document.getElementById('submit-answer').textContent = 'ANSWER SUBMITTED';
+                }
+            } catch (error) {
+                console.error('Error submitting answer:', error);
+                alert('Error submitting answer. Please try again.');
+            }
+        }
+
+        function showResults(data) {
+            // Hide other sections
+            document.getElementById('matchmaking-section').classList.add('hidden');
+            document.getElementById('waiting-section').classList.add('hidden');
+            document.getElementById('competition-section').classList.add('hidden');
+            
+            // Show results section
+            document.getElementById('results-section').classList.remove('hidden');
+            
+            // Display results
+            const winnerDisplay = document.getElementById('winner-display');
+            const resultsDetails = document.getElementById('results-details');
+            
+            if (data.winner === currentUser) {
+                winnerDisplay.innerHTML = '🎉 YOU WIN! 🎉';
+                winnerDisplay.className = 'text-2xl mb-6 text-green-400 font-bold';
+            } else if (data.winner === 'tie') {
+                winnerDisplay.innerHTML = '🤝 IT\'S A TIE! 🤝';
+                winnerDisplay.className = 'text-2xl mb-6 text-yellow-400 font-bold';
+            } else {
+                winnerDisplay.innerHTML = '😔 YOU LOSE 😔';
+                winnerDisplay.className = 'text-2xl mb-6 text-red-400 font-bold';
+            }
+            
+            // Show detailed results
+            let resultsHtml = '';
+            for (const [player, result] of Object.entries(data.results)) {
+                const isCurrentUser = player === currentUser;
+                const playerName = isCurrentUser ? 'You' : 'Opponent';
+                resultsHtml += `
+                    <div class="mb-4 p-4 bg-gray-800 rounded-lg">
+                        <h4 class="font-bold ${isCurrentUser ? 'text-green-400' : 'text-blue-400'}">${playerName}</h4>
+                        <p>Score: ${result.score}%</p>
+                        <p>Feedback: ${result.feedback}</p>
+                    </div>
+                `;
+            }
+            resultsDetails.innerHTML = resultsHtml;
+        }
+
+        function resetCompetition() {
+            currentCompetition = null;
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+            if (waitingInterval) {
+                clearInterval(waitingInterval);
+                waitingInterval = null;
+            }
+            
+            document.getElementById('answer-input').value = '';
+            document.getElementById('submit-answer').disabled = false;
+            document.getElementById('submit-answer').textContent = 'SUBMIT ANSWER';
+            
+            document.getElementById('results-section').classList.add('hidden');
+            document.getElementById('matchmaking-section').classList.remove('hidden');
+        }
+
+        async function loadWaitingPlayers() {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/competition/waiting-players');
+                const data = await response.json();
+                
+                const waitingList = document.getElementById('waiting-players-list');
+                waitingList.innerHTML = '';
+                
+                if (data.waiting_players.length === 0) {
+                    waitingList.innerHTML = '<p class="text-gray-400">No players waiting</p>';
+                } else {
+                    data.waiting_players.forEach(player => {
+                        if (player.username !== currentUser) {
+                            const playerDiv = document.createElement('div');
+                            playerDiv.className = 'flex justify-between items-center p-3 bg-gray-800 rounded-lg';
+                            playerDiv.innerHTML = `
+                                <div>
+                                    <span class="font-bold">${player.username}</span>
+                                    <span class="text-cyan-300 ml-2">${getSubjectName(player.subject)}</span>
+                                    <span class="text-yellow-300 ml-2">${player.difficulty.toUpperCase()}</span>
+                                </div>
+                                <div class="text-gray-400">
+                                    ${player.waiting_time}s
+                                </div>
+                            `;
+                            waitingList.appendChild(playerDiv);
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading waiting players:', error);
+            }
+        }
+
+        function getSubjectName(subject) {
+            const subjects = {
+                'math': 'Mathematics',
+                'physics': 'Physics',
+                'chemistry': 'Chemistry',
+                'biology': 'Biology',
+                'cs': 'Computer Science',
+                'engineering': 'Engineering'
+            };
+            return subjects[subject] || subject;
+        }
+    </script>
+</body>
+</html> 
